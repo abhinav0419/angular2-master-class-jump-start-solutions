@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {ContactHeaderComponent} from './contact-header-component/contact-header-component';
 import {Contact} from './models/contact';
+import {CONTACT_DATA} from './data/contact-data';
 
 @Component({
   selector: 'contacts-app',
@@ -8,7 +9,7 @@ import {Contact} from './models/contact';
   template: `
     <contact-header-component></contact-header-component>
     <ul class="collection">
-      <li class="collection-item avatar">
+      <li class="collection-item avatar" *ngFor="#contact of contacts">
         <img [src]="contact.image" alt="" class="circle">
         <span class="title">{{contact.name}}</span>
       </li>
@@ -18,19 +19,5 @@ import {Contact} from './models/contact';
 })
 export class ContactsApp {
 
-  contact: Contact = {
-    id: 7,
-    name: 'Diana Ellis',
-    email: '',
-    phone: '',
-    birthday: '',
-    website: '',
-    image: '/assets/images/6.jpg',
-    address: {
-      street: '6554 park lane',
-      zip: '43378',
-      city: 'Rush',
-      country: 'United States'
-    }
-  };
+  contacts:Array<Contact> = CONTACT_DATA;
 }
