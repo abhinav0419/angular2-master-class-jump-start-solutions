@@ -28,7 +28,8 @@ export class ContactEditorComponent implements OnInit {
   }
 
   save (contact: Contact) {
-    throw new Error('Not implemented');
+    this.contactsService.updateContact(contact)
+                        .subscribe(() => this.goToDetails(contact));
   }
 
   private goToDetails (contact: Contact) {

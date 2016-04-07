@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
+import {Http, Headers} from 'angular2/http';
 import {Contact} from '../models/contact';
 import {CONTACT_DATA} from '../data/contact-data';
 
@@ -21,5 +21,10 @@ export class ContactsService {
   getContact(id: any) {
     return this.http.get(`${this.API_ENDPOINT}/contacts/${id}`)
                     .map(res => res.json().item);
+  }
+
+  updateContact(contact: Contact) {
+    let headers = new Headers({'Content-Type': 'application/json;charset=UTF-8'});
+    return this.http.put(`${this.API_ENDPOINT}/contacts/${contact.id}`, JSON.stringify(contact), { headers });
   }
 }
