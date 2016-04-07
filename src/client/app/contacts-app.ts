@@ -1,30 +1,21 @@
 import {Component, OnInit} from 'angular2/core';
+import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig} from 'angular2/router';
 import {ContactHeaderComponent} from './contact-header-component/contact-header-component';
 import {Contact} from './models/contact';
 import {ContactsService} from './contacts-service/contacts-service';
+import {ContactsListComponent} from './contacts-list-component/contacts-list-component';
 
+@RouteConfig([
+  {path: '/', component: ContactsListComponent, name: 'ContactsList', useAsDefault: true}
+])
 @Component({
   selector: 'contacts-app',
   styleUrls: ['app/contacts-app.css'],
   template: `
     <contact-header-component></contact-header-component>
-    <ul class="collection">
-      <li class="collection-item avatar" *ngFor="#contact of contacts">
-        <img [src]="contact.image" alt="" class="circle">
-        <span class="title">{{contact.name}}</span>
-      </li>
-    </ul>
+    <router-outlet></router-outlet>
   `,
-  providers: [ContactsService],
-  directives: [ContactHeaderComponent]
+  providers: [ContactsService, ROUTER_PROVIDERS],
+  directives: [ContactHeaderComponent, ROUTER_DIRECTIVES]
 })
-export class ContactsApp implements OnInit {
-
-  contacts:Array<Contact> = [];
-
-  constructor(private contactsService: ContactsService) {}
-
-  ngOnInit() {
-    this.contacts = this.contactsService.getContacts();
-  }
-}
+export class ContactsApp {}
