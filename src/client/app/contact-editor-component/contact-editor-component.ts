@@ -1,5 +1,4 @@
 import {Component, OnInit} from 'angular2/core';
-import {CloneService} from '../clone-service/clone-service';
 import {ContactsService} from '../contacts-service/contacts-service';
 import {Contact} from '../models/contact';
 import {Router, RouteParams} from 'angular2/router';
@@ -12,25 +11,24 @@ import {Router, RouteParams} from 'angular2/router';
 })
 export class ContactEditorComponent implements OnInit {
 
-  contact: Contact;
+  // we need to initialize since we can't use ?. operator with ngModel
+  contact: Contact = <Contact>{ address: {}};
 
-  constructor(private cloneService: CloneService<Contact>,
-              private router: Router,
+  constructor(private router: Router,
               private contactsService: ContactsService,
               private routeParams: RouteParams) {}
 
   ngOnInit() {
-    this.contact = this.cloneService.createClone(this.contactsService.getContact(this.routeParams.get('id')));
+    this.contactsService.getContact(this.routeParams.get('id'))
+                        .subscribe(contact => this.contact = contact);
   }
 
   cancel (contact: Contact) {
-    this.cloneService.abortChanges();
     this.goToDetails(contact);
   }
 
   save (contact: Contact) {
-    this.cloneService.commitChanges();
-    this.goToDetails(contact);
+    throw new Error('Not implemented');
   }
 
   private goToDetails (contact: Contact) {
