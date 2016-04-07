@@ -4,9 +4,11 @@ import {ContactHeaderComponent} from './contact-header-component/contact-header-
 import {Contact} from './models/contact';
 import {ContactsService} from './contacts-service/contacts-service';
 import {ContactsListComponent} from './contacts-list-component/contacts-list-component';
+import {ContactDetailComponent} from './contact-detail-component/contact-detail-component';
 
 @RouteConfig([
-  {path: '/', component: ContactsListComponent, name: 'ContactsList', useAsDefault: true}
+  {path: '/', component: ContactsListComponent, name: 'ContactsList', useAsDefault: true},
+  {path: '/contact/:id', component: ContactDetailComponent, name: 'ContactDetail'}
 ])
 @Component({
   selector: 'contacts-app',
