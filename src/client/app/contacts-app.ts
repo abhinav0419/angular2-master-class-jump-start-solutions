@@ -1,7 +1,7 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {ContactHeaderComponent} from './contact-header-component/contact-header-component';
 import {Contact} from './models/contact';
-import {CONTACT_DATA} from './data/contact-data';
+import {ContactsService} from './contacts-service/contacts-service';
 
 @Component({
   selector: 'contacts-app',
@@ -15,9 +15,16 @@ import {CONTACT_DATA} from './data/contact-data';
       </li>
     </ul>
   `,
+  providers: [ContactsService],
   directives: [ContactHeaderComponent]
 })
-export class ContactsApp {
+export class ContactsApp implements OnInit {
 
-  contacts:Array<Contact> = CONTACT_DATA;
+  contacts:Array<Contact> = [];
+
+  constructor(private contactsService: ContactsService) {}
+
+  ngOnInit() {
+    this.contacts = this.contactsService.getContacts();
+  }
 }
